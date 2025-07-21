@@ -8,9 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "test": "playwright test",
+    "test:fast": "playwright test tests/essential.spec.ts --reporter=line",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report",
+    "test:ci": "playwright test tests/essential.spec.ts"
   },
   "dependencies": {
     "@types/node": "^24.0.15",
