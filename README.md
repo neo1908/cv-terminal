@@ -55,6 +55,38 @@ npm run build
 
 The application fetches CV data from `https://st2projects.com/cv/cv.json` with configurable TTL caching (default: 5 minutes). The cache can be managed through the terminal interface.
 
+## 🚀 Automatic Deployment
+
+This project is configured for automatic deployment to Cloudflare Pages via GitHub Actions. Every commit to the `main` branch triggers a new deployment.
+
+### Setup GitHub Secrets
+
+To enable automatic deployment, add these secrets to your GitHub repository:
+
+1. Go to your GitHub repository → Settings → Secrets and variables → Actions
+2. Add the following repository secrets:
+
+```
+CLOUDFLARE_API_TOKEN=your_cloudflare_api_token
+CLOUDFLARE_ACCOUNT_ID=2e77fb904446cac18196b98345e8bf86
+```
+
+### Getting Your Cloudflare API Token
+
+1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/profile/api-tokens)
+2. Click "Create Token"
+3. Use "Custom token" template with these permissions:
+   - **Account** - Cloudflare Pages:Write
+   - **Zone** - Zone:Read (if using custom domain)
+   - **Account Resources** - Include All accounts
+4. Copy the generated token and add it as `CLOUDFLARE_API_TOKEN` secret
+
+The deployment workflow will automatically:
+- Install dependencies
+- Build the Next.js application 
+- Deploy to Cloudflare Pages
+- Update the live site at your custom domain
+
 ## 🎨 Design Features
 
 - **Classic Terminal Aesthetic**: Bright green text on deep black background
