@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  }
+  
+  body {
+    @apply bg-terminal-bg text-terminal-text;
+    overflow: hidden;
+    background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .terminal-window {
+    @apply bg-terminal-surface;
+    border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow: 
+      0 0 20px rgba(0, 255, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+  
+  .terminal-header {
+    @apply bg-terminal-window border-b border-terminal-comment/30;
+    border-radius: 6px 6px 0 0;
+    background: linear-gradient(to bottom, #333, #1a1a1a);
+  }
+  
+  .terminal-cursor {
+    @apply inline-block w-2 h-5 bg-terminal-text ml-1;
+    animation: blink 1s infinite;
+  }
+  
+  .terminal-line {
+    @apply flex items-start min-h-[1.2rem] leading-tight;
+  }
+  
+  .terminal-prompt {
+    @apply text-terminal-prompt font-bold;
+    text-shadow: 0 0 5px currentColor;
+  }
+  
+  .terminal-content {
+    @apply p-4;
+    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(10,10,10,0.9) 100%);
+    font-family: 'Courier New', monospace;
+    line-height: 1.4;
+  }
+  
+  .terminal-output {
+    text-shadow: 0 0 3px currentColor;
+  }
+  
+  .typing-animation {
+    overflow: hidden;
+    border-right: 2px solid;
+    white-space: nowrap;
+    animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
+  }
+  
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  
+  @keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: #00ff00; }
+  }
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
