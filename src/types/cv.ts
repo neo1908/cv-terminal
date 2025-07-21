@@ -16,11 +16,15 @@ export interface CVData {
     }>;
   };
   work: Array<{
-    company: string;
+    name: string; // This is the company name in the JSON
     position: string;
     startDate: string;
     endDate?: string;
-    highlights: string[];
+    summary?: string;
+    highlights?: string[];
+    location?: string;
+    description?: string;
+    url?: string;
   }>;
   education: Array<{
     institution: string;
@@ -28,7 +32,8 @@ export interface CVData {
     studyType: string;
     startDate: string;
     endDate: string;
-    courses: string[];
+    url?: string;
+    courses?: string[];
   }>;
   skills: Array<{
     name: string;
@@ -41,14 +46,19 @@ export interface CVData {
   }>;
   interests: Array<{
     name: string;
+    summary?: string;
     keywords: string[];
   }>;
   projects: Array<{
     name: string;
     description: string;
-    highlights: string[];
-    keywords: string[];
+    highlights?: string[];
+    keywords?: string[];
+    startDate?: string;
     url?: string;
+    urls?: string[];
+    roles?: string[];
+    type?: string;
   }>;
   meta: {
     version: string;

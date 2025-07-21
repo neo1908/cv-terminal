@@ -126,7 +126,7 @@ ${basics.summary}`;
     this.cvData.work.forEach((job, index) => {
       const endDate = job.endDate || 'Present';
       output += `\n│  🏢  ${job.position.padEnd(58)} │`;
-      output += `\n│      ${job.company.padEnd(58)} │`;
+      output += `\n│      ${job.name.padEnd(58)} │`;
       output += `\n│      📅 ${(job.startDate + ' - ' + endDate).padEnd(54)} │`;
       output += `\n│                                                                         │`;
       
