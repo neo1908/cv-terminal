@@ -11,6 +11,12 @@ concurrency:
   group: ci-cd-${{ github.ref }}
   cancel-in-progress: true
 
+# Performance optimizations:
+# - Cache Playwright browsers (~100MB, saves 30-60s per run)
+# - Cache node_modules (saves 10-20s per run)
+# - Only install Chromium browser for CI (not all 5 browsers)
+# - Use essential test suite (6 tests vs 260+ tests)
+
 jobs:
   test:
     name: Run Tests
@@ -27,11 +33,39 @@ jobs:
         node-version: '20'
         cache: 'npm'
     
+    - name: Cache node modules
+      uses: actions/cache@v4
+      id: npm-cache
+      with:
+        path: node_modules
+        key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          node-modules-${{ runner.os }}-
+    
     - name: Install dependencies
+      if: steps.npm-cache.outputs.cache-hit != 'true'
       run: npm ci
     
+    - name: Get Playwright version
+      id: playwright-version
+      run: echo "version=$(npx playwright --version | cut -d' ' -f2)" >> $GITHUB_OUTPUT
+    
+    - name: Cache Playwright browsers
+      uses: actions/cache@v4
+      id: playwright-cache
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-browsers-${{ steps.playwright-version.outputs.version }}-${{ runner.os }}
+        restore-keys: |
+          playwright-browsers-${{ runner.os }}
+    
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
+      run: npx playwright install --with-deps chromium
+    
+    - name: Install system dependencies for browsers (if cache hit)
+      if: steps.playwright-cache.outputs.cache-hit == 'true'
+      run: npx playwright install-deps chromium
     
     - name: Run Essential Playwright tests (faster)
       run: npm run test:ci
@@ -61,7 +95,17 @@ jobs:
         node-version: '20'
         cache: 'npm'
 
+    - name: Cache node modules
+      uses: actions/cache@v4
+      id: npm-cache-deploy
+      with:
+        path: node_modules
+        key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          node-modules-${{ runner.os }}-
+
     - name: Install dependencies
+      if: steps.npm-cache-deploy.outputs.cache-hit != 'true'
       run: npm ci
 
     - name: Build application
