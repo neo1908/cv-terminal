@@ -71,7 +71,7 @@ To enable automatic deployment, add these secrets to your GitHub repository:
 
 ```
 CLOUDFLARE_API_TOKEN=your_cloudflare_api_token
-CLOUDFLARE_ACCOUNT_ID=2e77fb904446cac18196b98345e8bf86
+CLOUDFLARE_ACCOUNT_ID=your_cf_id
 ```
 
 ### Getting Your Cloudflare API Token
