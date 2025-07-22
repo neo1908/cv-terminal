@@ -57,7 +57,10 @@ The application fetches CV data from `https://st2projects.com/cv/cv.json` with c
 
 ## 🚀 Automatic Deployment
 
-This project is configured for automatic deployment to Cloudflare Pages via GitHub Actions. Every commit to the `main` branch triggers a new deployment.
+This project is configured for automatic deployment to Cloudflare Pages via GitHub Actions:
+
+- **Production Deployments**: Every commit to the `main` branch triggers a new deployment
+- **Preview Deployments**: Pull requests automatically get preview environments for testing changes
 
 ### Setup GitHub Secrets
 
@@ -86,6 +89,15 @@ The deployment workflow will automatically:
 - Build the Next.js application 
 - Deploy to Cloudflare Pages
 - Update the live site at your custom domain
+
+### Preview Deployments
+
+Pull requests automatically receive preview deployments that:
+- Run all tests before deployment
+- Generate unique preview URLs for each PR
+- Update automatically when new commits are pushed
+- Post preview URLs as comments on the PR
+- Allow stakeholders to review changes before merging
 
 ### CI/CD Performance Optimizations
 
