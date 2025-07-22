@@ -107,10 +107,10 @@ jobs:
                 
                 // Parse Playwright JSON format
                 const stats = results.stats || {};
-                const total = stats.total || 0;
-                const passed = stats.passed || 0;
-                const failed = stats.failed || 0;
+                const passed = stats.expected || 0;
+                const failed = stats.unexpected || 0;
                 const skipped = stats.skipped || 0;
+                const total = passed + failed + skipped;
                 
                 return {
                   status: failed > 0 ? 'failed' : 'passed',
