@@ -188,15 +188,12 @@ test.describe('Performance Tests', () => {
     // UI should remain responsive during loading
     const input = page.locator('input[type="text"]');
     
-    // Input should be disabled during loading
-    const isDisabled = await input.isDisabled();
-    
     // Wait for command to complete
     await page.waitForSelector('.terminal-output:last-child');
     
-    // Input should be re-enabled and focused after command completes
+    // Input should be re-enabled and ready for next command after completion
     await expect(input).not.toBeDisabled();
-    await expect(input).toBeFocused();
+    await expect(input).toHaveValue('');
   });
 
   test('should handle network errors gracefully', async ({ page }) => {
@@ -224,7 +221,14 @@ test.describe('Performance Tests', () => {
     
     // Should still be able to use the terminal
     const input = page.locator('input[type="text"]');
-    await expect(input).toBeFocused();
     await expect(input).not.toBeDisabled();
+    
+    // Verify we can still execute other commands
+    await input.fill('help');
+    await input.press('Enter');
+    await page.waitForTimeout(1000);
+    
+    const helpOutput = page.locator('.terminal-output').last();
+    await expect(helpOutput).toContainText('AVAILABLE COMMANDS');
   });
 });

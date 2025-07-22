@@ -14,7 +14,11 @@ export default defineConfig({
   /* Increase workers for faster execution */
   workers: process.env.CI ? 2 : undefined,
   /* Use faster reporter */
-  reporter: process.env.CI ? [['line'], ['html']] : 'html',
+  reporter: process.env.CI ? [
+    ['line'],
+    ['html'],
+    ['json', { outputFile: 'playwright-report/results.json' }]
+  ] : 'html',
   /* Shared settings for all the projects below. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
