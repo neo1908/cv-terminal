@@ -11,6 +11,13 @@ concurrency:
   group: ci-cd-${{ github.ref }}
   cancel-in-progress: true
 
+# Required permissions for GitHub Actions
+permissions:
+  contents: read          # Allow reading repository contents
+  issues: write           # Allow commenting on issues and PRs
+  pull-requests: write    # Allow updating PR status
+  statuses: write         # Allow creating commit status checks
+
 # Performance optimizations:
 # - Cache Playwright browsers (~100MB, saves 30-60s per run)
 # - Cache node_modules (saves 10-20s per run)
