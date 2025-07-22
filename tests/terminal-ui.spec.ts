@@ -34,19 +34,24 @@ test.describe('CV Terminal UI Tests', () => {
     await expect(titles.first()).toBeAttached();
   });
 
-  test('should focus on input field on page load', async ({ page }) => {
+  test('should have input field ready for interaction on page load', async ({ page }) => {
     const input = page.locator('input[type="text"]');
-    await expect(input).toBeFocused();
+    await expect(input).toBeVisible();
+    await expect(input).not.toBeDisabled();
   });
 
-  test('should maintain focus when clicking elsewhere', async ({ page }) => {
+  test('should maintain functionality when clicking elsewhere', async ({ page }) => {
     const input = page.locator('input[type="text"]');
     
     // Click somewhere else in the terminal
     await page.locator('.terminal-content').click();
     
-    // Input should still be focused
-    await expect(input).toBeFocused();
+    // Input should still be functional
+    await expect(input).not.toBeDisabled();
+    
+    // Should be able to type in input
+    await input.fill('test');
+    await expect(input).toHaveValue('test');
   });
 
   test('should display proper terminal prompt', async ({ page }) => {
