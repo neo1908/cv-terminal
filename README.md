@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> Due to recent github outages this repo has been migrated to [https://gitlab.com/ValiantElf/cv-terminal](https://gitlab.com/ValiantElf/cv-terminal)
+
 # CV Terminal
 
 A Linux terminal-style CV visualizer built with Next.js and TypeScript. This interactive web application presents professional information through authentic terminal commands, featuring a classic retro computing aesthetic.
